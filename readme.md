@@ -1,1 +1,1 @@
-Telegram bot for Sionnach
+Extensible telegram bot

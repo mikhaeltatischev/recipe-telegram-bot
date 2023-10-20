@@ -15,8 +15,9 @@ public class InlineKeyboard {
 
         List<InlineKeyboardButton> rowInline1 = new ArrayList<>();
         InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-        inlineKeyboardButton1.setText("Поиск по ингридиентам");
+        inlineKeyboardButton1.setText("Поиск по ингредиентам");
         inlineKeyboardButton1.setCallbackData("/ingredients");
+        rowInline1.add(inlineKeyboardButton1);
 
         rowsInline.add(rowInline1);
 

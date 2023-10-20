@@ -15,9 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-
     private final StateRepository stateRepository;
+    private final UserRepository userRepository;
 
     @Override
     public User findUserByUpdate(ClassifiedUpdate classifiedUpdate) {

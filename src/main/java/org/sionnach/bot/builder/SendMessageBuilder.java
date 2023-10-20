@@ -7,7 +7,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public class SendMessageBuilder {
 
-    private static final String START_MESSAGE = "Hello";
+    private static final String START_MESSAGE = "Привет! \nЭтот бот поможет тебе с поиском рецептов любых блюд\n" +
+            "Ниже ты можешь выбрать способ поиска рецепта";
 
     private SendMessage sendMessage;
 
@@ -26,7 +27,7 @@ public class SendMessageBuilder {
 
         Answer answer = new Answer();
         sendMessage.setText(START_MESSAGE);
-        sendMessage.setReplyMarkup(InlineKeyboard.profileKeyboard());
+        sendMessage.setReplyMarkup();
         answer.setBotApiMethod(sendMessage);
 
         return answer;

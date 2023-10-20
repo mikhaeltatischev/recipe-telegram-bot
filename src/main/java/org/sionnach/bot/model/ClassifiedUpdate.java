@@ -18,9 +18,6 @@ public class ClassifiedUpdate {
     private final Update update;
     private final List<String> args;
     private String userName;
-    private List<Master> masters;
-    private Dates dates;
-    private Times times;
 
     public ClassifiedUpdate(Update update) {
         this.update = update;

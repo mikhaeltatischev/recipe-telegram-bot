@@ -5,9 +5,7 @@ import lombok.Getter;
 @Getter
 public enum TextValues {
 
-    APPOINTMENT("Записаться"),
-    EDIT_PROFILE("Редактировать профиль"),
-    CREATE_PROFILE("Создать профиль");
+    APPOINTMENT("Записаться");
 
     private final String value;
 

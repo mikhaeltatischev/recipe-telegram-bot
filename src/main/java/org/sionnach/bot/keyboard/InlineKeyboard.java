@@ -18,6 +18,10 @@ public class InlineKeyboard {
         inlineKeyboardButton1.setText("Поиск по ингредиентам");
         inlineKeyboardButton1.setCallbackData("/ingredients");
         rowInline1.add(inlineKeyboardButton1);
+        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
+        inlineKeyboardButton2.setText("Поиск по названию блюда");
+        inlineKeyboardButton2.setCallbackData("/name");
+        rowInline1.add(inlineKeyboardButton2);
 
         rowsInline.add(rowInline1);
 

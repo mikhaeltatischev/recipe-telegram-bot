@@ -11,11 +11,13 @@ import java.util.List;
 @Component
 public class HandlersMap {
 
-    private HashMap<TelegramType, List<Handler>> hashMap = new HashMap<>();
     private final List<Handler> handlers;
+    private HashMap<TelegramType, List<Handler>> hashMap = new HashMap<>();
+    private BotState botState;
 
     public HandlersMap(List<Handler> handlers) {
         this.handlers = handlers;
+        this.botState = BotState.DEFAULT;
     }
 
     @PostConstruct

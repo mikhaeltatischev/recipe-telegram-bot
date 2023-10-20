@@ -9,7 +9,7 @@ import org.sionnach.bot.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IngridientsCallBack implements CallBack {
+public class NameCallBack implements CallBack {
 
     @Override
     public Class handler() {
@@ -18,13 +18,13 @@ public class IngridientsCallBack implements CallBack {
 
     @Override
     public Object getFindBy() {
-        return "/ingredients";
+        return "/name";
     }
 
     @SneakyThrows
     @Override
     public Answer getAnswer(ClassifiedUpdate update, User user) {
-        return new SendMessageBuilder().chatId(user.getChatId()).buildIngredients();
+        return new SendMessageBuilder().chatId(user.getChatId()).buildName();
     }
 
 }

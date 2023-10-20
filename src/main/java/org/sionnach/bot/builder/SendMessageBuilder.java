@@ -27,7 +27,7 @@ public class SendMessageBuilder {
 
         Answer answer = new Answer();
         sendMessage.setText(START_MESSAGE);
-        sendMessage.setReplyMarkup();
+        sendMessage.setReplyMarkup(InlineKeyboard.serviceKeyboard());
         answer.setBotApiMethod(sendMessage);
 
         return answer;

@@ -9,7 +9,7 @@ import org.sionnach.bot.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StartCallBack implements CallBack {
+public class IngridientsCallBack implements CallBack {
 
     @Override
     public Class handler() {
@@ -18,7 +18,7 @@ public class StartCallBack implements CallBack {
 
     @Override
     public Object getFindBy() {
-        return "/start";
+        return "/ingredients";
     }
 
     @SneakyThrows

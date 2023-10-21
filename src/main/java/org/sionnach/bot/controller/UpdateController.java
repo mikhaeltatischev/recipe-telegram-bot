@@ -17,15 +17,30 @@ public class UpdateController {
     private final UserService userService;
     private final HandlersMap commandMap;
     private final RecipeClient client;
+    private BotState botState;
 
     public Answer request(Update update) {
         ClassifiedUpdate classifiedUpdate = new ClassifiedUpdate(update);
         User user = userService.findUserByUpdate(classifiedUpdate);
 
-        if (classifiedUpdate.getTelegramType() == TelegramType.Text) {
+        if (botState != null) {
+            if (botState.equals(BotState.WAITING_NAME)) {
 
+            }
+            if (botState.equals(BotState.WAITING_INGREDIENTS)) {
+
+            }
         }
 
-        return commandMap.execute(classifiedUpdate, user);
+        Answer answer = commandMap.execute(classifiedUpdate, user);
+        checkBotState(classifiedUpdate);
+
+        return answer;
+    }
+
+    private void checkBotState(ClassifiedUpdate update) {
+        if (update.getBotState() != null) {
+            botState = update.getBotState();
+        }
     }
 }

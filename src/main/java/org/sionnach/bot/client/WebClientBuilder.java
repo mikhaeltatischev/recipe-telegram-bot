@@ -23,7 +23,7 @@ public class WebClientBuilder {
                     connection.addHandlerLast(new WriteTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS));
                 });
 
-        return org.springframework.web.reactive.function.client.WebClient.builder()
+        return WebClient.builder()
                 .baseUrl(baseUrl)
                 .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                 .build();

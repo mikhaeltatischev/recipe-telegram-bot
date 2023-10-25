@@ -9,6 +9,8 @@ import org.sionnach.bot.service.UserService;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class UpdateController {
 
     private final UserService userService;
     private final HandlersMap commandMap;
-    private final RecipeClient client;
+    private final RecipeClient recipeClient;
     private BotState botState;
 
     public Answer request(Update update) {
@@ -25,10 +27,11 @@ public class UpdateController {
 
         if (botState != null) {
             if (botState.equals(BotState.WAITING_NAME)) {
-
-            }
-            if (botState.equals(BotState.WAITING_INGREDIENTS)) {
-
+                setMealByName(classifiedUpdate);
+            } else if (botState.equals(BotState.WAITING_INGREDIENT)) {
+                setMealByIngredient(classifiedUpdate);
+            } else if (botState.equals(BotState.DEFAULT)) {
+                setMealById(classifiedUpdate);
             }
         }
 
@@ -42,5 +45,32 @@ public class UpdateController {
         if (update.getBotState() != null) {
             botState = update.getBotState();
         }
+    }
+
+    private void setMealByName(ClassifiedUpdate update) {
+        String name = update.getUpdate().getMessage().getText();
+        List<Meal> meal = recipeClient.findByName(name);
+
+        update.setTelegramType(TelegramType.Command);
+        update.setCommandName("/meal");
+        update.setMeals(meal);
+    }
+
+    private void setMealByIngredient(ClassifiedUpdate update) {
+        String ingredient = update.getUpdate().getMessage().getText();
+        List<Meal> meal = recipeClient.findByMainIngredient(ingredient);
+
+        update.setTelegramType(TelegramType.Command);
+        update.setCommandName("/meal");
+        update.setMeals(meal);
+    }
+
+    private void setMealById(ClassifiedUpdate update) {
+        String id = update.getArgs().get(0);
+        List<Meal> meal = recipeClient.findById(id);
+
+        update.setTelegramType(TelegramType.Command);
+        update.setCommandName("/meal");
+        update.setMeals(meal);
     }
 }

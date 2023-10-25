@@ -1,6 +1,4 @@
 package org.sionnach.bot.client;
 
-public class TranslateClient {
-
-
+public interface TranslateClient {
 }

@@ -3,6 +3,7 @@ package org.sionnach.bot.builder;
 import lombok.SneakyThrows;
 import org.sionnach.bot.keyboard.InlineKeyboard;
 import org.sionnach.bot.model.Answer;
+import org.sionnach.bot.model.Meal;
 import org.sionnach.bot.model.Recipe;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -15,9 +16,10 @@ public class SendMessageBuilder {
             "Ниже ты можешь выбрать способ поиска рецепта";
     private static final String INGREDIENTS_MESSAGE = "Введите ингредиенты по которым вы хотели бы найти рецепт\n" +
             "Формат ввода: \"Спаггети, бекон, сыр\"";
+    private static final String INGREDIENT_MESSAGE = "Введите основной ингредиент блюда";
     private static final String POPULAR_MESSAGE = "Популярные рецепты";
+    private static final String MEALS_MESSAGE = "Подобранные рецепты";
     private static final String NAME_MESSAGE = "Введите название блюда";
-    private static final String DESCRIPTION = "Описание блюда - ";
     private static final String INGREDIENTS = "Ингредиенты:\n";
     private static final String INSTRUCTION = "Способ приготовления - ";
     private static final String VIDEO = "Видео приготовления (английский язык) - ";
@@ -43,25 +45,23 @@ public class SendMessageBuilder {
         return createAnswer(START_MESSAGE, InlineKeyboard.mainKeyboard());
     }
 
+    public Answer buildMeal(List<Meal> meals) {
+        if (meals.size() > 1) {
+            return createAnswer(MEALS_MESSAGE, InlineKeyboard.mealsKeyboard(meals));
+        } else {
+            String recipe = createRecipeString(meals.get(0));
+            return createAnswer(recipe);
+        }
+    }
+
     @SneakyThrows
     public Answer buildIngredients() {
-        return createAnswer(INGREDIENTS_MESSAGE);
+        return createAnswer(INGREDIENT_MESSAGE);
     }
 
     @SneakyThrows
     public Answer buildName() {
         return createAnswer(NAME_MESSAGE);
-    }
-
-    @SneakyThrows
-    public Answer buildPopular(List<Recipe> recipes) {
-        return createAnswer(POPULAR_MESSAGE, InlineKeyboard.popularKeyboard(recipes));
-    }
-
-    @SneakyThrows
-    public Answer buildRecipe(Recipe recipe) {
-        String stringRecipe = createRecipeString(recipe);
-        return createAnswer(stringRecipe);
     }
 
     private Answer createAnswer(String message, InlineKeyboardMarkup keyboard) {
@@ -81,40 +81,37 @@ public class SendMessageBuilder {
         return answer;
     }
 
-    private String createRecipeString(Recipe recipe) {
+    private String createRecipeString(Meal meal) {
         StringBuilder builder = new StringBuilder();
-        builder.append(recipe.getName())
+
+        builder.append(meal.getStrMeal())
                 .append("\n\n")
                 .append(CATEGORY)
-                .append(recipe.getCategory())
+                .append(meal.getStrCategory())
                 .append("\n\n")
                 .append(AREA)
-                .append(recipe.getArea())
-                .append("\n\n")
-                .append(DESCRIPTION)
-                .append(recipe.getDescription())
+                .append(meal.getStrArea())
                 .append("\n\n")
                 .append(INGREDIENTS);
 
-        List<String> ingredients = List.of(recipe.getIngredients().split(","));
-        List<String> measures = List.of(recipe.getMeasures().split(","));
+        List<String> ingredients = meal.getIngredients();
+        List<String> measures = meal.getMeasures();
 
         for (int i = 0; i < ingredients.size(); i++) {
             builder.append(ingredients.get(i))
-                    .append(" ")
-                    .append("-")
-                    .append(" ")
+                    .append(" - ")
                     .append(measures.get(i))
                     .append("\n");
             if (i == ingredients.size() - 1) {
                 builder.append("\n");
             }
         }
+
         builder.append(INSTRUCTION)
-                .append(recipe.getInstruction())
+                .append(meal.getStrInstructions())
                 .append("\n\n")
                 .append(VIDEO)
-                .append(recipe.getYoutube());
+                .append(meal.getStrYoutube());
 
         return builder.toString();
     }

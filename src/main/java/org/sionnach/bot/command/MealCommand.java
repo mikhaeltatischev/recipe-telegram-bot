@@ -1,8 +1,8 @@
-package org.sionnach.bot.callBack;
+package org.sionnach.bot.command;
 
 import lombok.SneakyThrows;
 import org.sionnach.bot.builder.SendMessageBuilder;
-import org.sionnach.bot.handler.CallBackHandler;
+import org.sionnach.bot.handler.CommandHandler;
 import org.sionnach.bot.model.Answer;
 import org.sionnach.bot.model.BotState;
 import org.sionnach.bot.model.ClassifiedUpdate;
@@ -10,23 +10,23 @@ import org.sionnach.bot.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IngridientsCallBack implements CallBack {
+public class MealCommand implements Command {
 
     @Override
     public Class handler() {
-        return CallBackHandler.class;
+        return CommandHandler.class;
     }
 
     @Override
     public Object getFindBy() {
-        return "/ingredient";
+        return "/meal";
     }
 
     @SneakyThrows
     @Override
     public Answer getAnswer(ClassifiedUpdate update, User user) {
-        update.setBotState(BotState.WAITING_INGREDIENT);
-        return new SendMessageBuilder().chatId(user.getChatId()).buildIngredients();
+        update.setBotState(BotState.DEFAULT);
+        return new SendMessageBuilder().chatId(user.getChatId()).buildMeal(update.getMeals());
     }
 
 }

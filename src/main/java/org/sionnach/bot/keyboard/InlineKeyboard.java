@@ -1,7 +1,6 @@
 package org.sionnach.bot.keyboard;
 
 import org.sionnach.bot.model.Meal;
-import org.sionnach.bot.model.Recipe;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 

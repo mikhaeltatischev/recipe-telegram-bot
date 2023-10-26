@@ -25,8 +25,7 @@ public class MealCommand implements Command {
     @SneakyThrows
     @Override
     public Answer getAnswer(ClassifiedUpdate update, User user) {
-        update.setBotState(BotState.DEFAULT);
-        return new SendMessageBuilder().chatId(user.getChatId()).buildMeal(update.getMeals());
+        return new SendMessageBuilder().chatId(user.getChatId()).buildMeal(update);
     }
 
 }

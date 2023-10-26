@@ -19,7 +19,6 @@ public class ClassifiedUpdate {
     private final List<String> args;
     private String userName;
     private List <Meal> meals;
-    private List<Recipe> recipes;
     private BotState botState;
 
     public ClassifiedUpdate(Update update) {

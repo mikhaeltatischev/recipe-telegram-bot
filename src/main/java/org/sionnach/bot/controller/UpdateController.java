@@ -30,8 +30,10 @@ public class UpdateController {
                 setMealByName(classifiedUpdate);
             } else if (botState.equals(BotState.WAITING_INGREDIENT)) {
                 setMealByIngredient(classifiedUpdate);
-            } else if (botState.equals(BotState.DEFAULT)) {
+            } else if (botState.equals(BotState.WAITING_ID)) {
                 setMealById(classifiedUpdate);
+            } else if (botState.equals(BotState.DEFAULT)) {
+                checkMainWords(classifiedUpdate);
             }
         }
 
@@ -72,5 +74,19 @@ public class UpdateController {
         update.setTelegramType(TelegramType.Command);
         update.setCommandName("/meal");
         update.setMeals(meal);
+    }
+
+    private void checkMainWords(ClassifiedUpdate classifiedUpdate) {
+        if (classifiedUpdate.getUpdate().getMessage() != null) {
+            if (classifiedUpdate.getUpdate().getMessage().getText().equals("Поиск по названию блюда")) {
+                classifiedUpdate.setCommandName("/name");
+                classifiedUpdate.setBotState(BotState.DEFAULT);
+                classifiedUpdate.setTelegramType(TelegramType.CallBack);
+            } else if (classifiedUpdate.getUpdate().getMessage().getText().equals("Поиск по основному ингредиенту")) {
+                classifiedUpdate.setCommandName("/ingredient");
+                classifiedUpdate.setBotState(BotState.DEFAULT);
+                classifiedUpdate.setTelegramType(TelegramType.CallBack);
+            }
+        }
     }
 }

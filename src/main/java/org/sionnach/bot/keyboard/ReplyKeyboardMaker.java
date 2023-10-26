@@ -9,12 +9,15 @@ import java.util.List;
 
 public class ReplyKeyboardMaker {
 
-    public static ReplyKeyboardMarkup getStartMenuKeyboard() {
+    public static ReplyKeyboardMarkup getMainMenuKeyboard() {
         KeyboardRow row = new KeyboardRow();
-        KeyboardButton button = new KeyboardButton();
-        button.setText("Создать профиль");
+        KeyboardButton button1 = new KeyboardButton();
+        button1.setText("Поиск по основному ингредиенту");
+        KeyboardButton button2 = new KeyboardButton();
+        button2.setText("Поиск по названию блюда");
 
-        row.add(button);
+        row.add(button1);
+        row.add(button2);
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         keyboard.add(row);

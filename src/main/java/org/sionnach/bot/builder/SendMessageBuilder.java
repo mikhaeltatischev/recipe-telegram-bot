@@ -2,11 +2,14 @@ package org.sionnach.bot.builder;
 
 import lombok.SneakyThrows;
 import org.sionnach.bot.keyboard.InlineKeyboard;
+import org.sionnach.bot.keyboard.ReplyKeyboardMaker;
 import org.sionnach.bot.model.Answer;
+import org.sionnach.bot.model.BotState;
+import org.sionnach.bot.model.ClassifiedUpdate;
 import org.sionnach.bot.model.Meal;
-import org.sionnach.bot.model.Recipe;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class SendMessageBuilder {
     private static final String INGREDIENTS_MESSAGE = "Введите ингредиенты по которым вы хотели бы найти рецепт\n" +
             "Формат ввода: \"Спаггети, бекон, сыр\"";
     private static final String INGREDIENT_MESSAGE = "Введите основной ингредиент блюда";
-    private static final String POPULAR_MESSAGE = "Популярные рецепты";
+    private static final String NOT_FOUND_MESSAGE = "Рецепты не найдены. Попробуйте ещё раз";
     private static final String MEALS_MESSAGE = "Подобранные рецепты";
     private static final String NAME_MESSAGE = "Введите название блюда";
     private static final String INGREDIENTS = "Ингредиенты:\n";
@@ -45,10 +48,18 @@ public class SendMessageBuilder {
         return createAnswer(START_MESSAGE, InlineKeyboard.mainKeyboard());
     }
 
-    public Answer buildMeal(List<Meal> meals) {
+    public Answer buildMeal(ClassifiedUpdate update) {
+        List<Meal> meals = update.getMeals();
+
+        if (meals == null || meals.isEmpty()) {
+            return createAnswer(NOT_FOUND_MESSAGE);
+        }
+
         if (meals.size() > 1) {
+            update.setBotState(BotState.WAITING_ID);
             return createAnswer(MEALS_MESSAGE, InlineKeyboard.mealsKeyboard(meals));
         } else {
+            update.setBotState(BotState.DEFAULT);
             String recipe = createRecipeString(meals.get(0));
             return createAnswer(recipe);
         }
@@ -76,6 +87,7 @@ public class SendMessageBuilder {
     private Answer createAnswer(String message) {
         Answer answer = new Answer();
         sendMessage.setText(message);
+        sendMessage.setReplyMarkup(ReplyKeyboardMaker.getMainMenuKeyboard());
         answer.setBotApiMethod(sendMessage);
 
         return answer;

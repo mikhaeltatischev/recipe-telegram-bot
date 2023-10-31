@@ -11,4 +11,5 @@ public interface RecipeClient {
     List<Meal> findByMainIngredient(String ingredient);
 
     List<Meal> findById(String id);
+
 }

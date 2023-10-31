@@ -38,4 +38,5 @@ public class CallBackHandler extends AbstractCallBackHandler {
     public Answer getAnswer(User user, ClassifiedUpdate update) {
         return hashMap.get(update.getCommandName()).getAnswer(update, user);
     }
+
 }

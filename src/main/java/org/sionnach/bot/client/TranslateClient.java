@@ -2,6 +2,8 @@ package org.sionnach.bot.client;
 
 public interface TranslateClient {
 
-    String translate(String text);
+    String translateText(String text);
+
+    String translateWord(String word);
 
 }

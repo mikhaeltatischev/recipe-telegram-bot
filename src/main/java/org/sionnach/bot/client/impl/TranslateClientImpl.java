@@ -16,7 +16,8 @@ public class TranslateClientImpl implements TranslateClient {
     private static final String TRANSLATE_URL = "/get";
     private static final String TEXT_PARAMETER = "q";
     private static final String LANGUAGE_PARAMETER = "langpair";
-    private static final String LANGUAGE_PAIR = "en|ru";
+    private static final String LANGUAGE_PAIR_EN = "en|ru";
+    private static final String LANGUAGE_PAIR_RU = "ru|en";
 
     private final WebClient webClient;
 
@@ -25,15 +26,20 @@ public class TranslateClientImpl implements TranslateClient {
     }
 
     @Override
-    public String translate(String text) {
+    public String translateText(String text) {
         return splitText(text);
     }
 
-    private String translateRequest(String text) {
+    @Override
+    public String translateWord(String word) {
+        return translateRequest(word, LANGUAGE_PAIR_RU);
+    }
+
+    private String translateRequest(String text, String languagePair) {
         Mono<ResponseData> response = webClient.get()
                 .uri((uriBuilder -> uriBuilder.path(TRANSLATE_URL)
                         .queryParam(TEXT_PARAMETER, text)
-                        .queryParam(LANGUAGE_PARAMETER, LANGUAGE_PAIR).build()))
+                        .queryParam(LANGUAGE_PARAMETER, languagePair).build()))
                 .retrieve()
                 .bodyToMono(ResponseData.class);
 
@@ -48,7 +54,7 @@ public class TranslateClientImpl implements TranslateClient {
         } else if (text.length() > 500) {
             return splitByCount(text, 2);
         } else {
-            return translateRequest(text);
+            return translateRequest(text, LANGUAGE_PAIR_EN);
         }
     }
 
@@ -64,7 +70,7 @@ public class TranslateClientImpl implements TranslateClient {
             } else {
                 str = text.substring(begin, end);
             }
-            stringBuilder.append(translateRequest(str));
+            stringBuilder.append(translateRequest(str, LANGUAGE_PAIR_EN));
             begin += 500;
             end += 500;
         }

@@ -128,6 +128,6 @@ public class SendMessageBuilder {
                 .append(VIDEO)
                 .append(meal.getStrYoutube());
 
-        return client.translate(builder.toString());
+        return client.translateText(builder.toString());
     }
 }

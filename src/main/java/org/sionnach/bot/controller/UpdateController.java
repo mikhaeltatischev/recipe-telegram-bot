@@ -3,6 +3,7 @@ package org.sionnach.bot.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sionnach.bot.client.RecipeClient;
+import org.sionnach.bot.client.TranslateClient;
 import org.sionnach.bot.handler.HandlersMap;
 import org.sionnach.bot.model.*;
 import org.sionnach.bot.service.UserService;
@@ -16,9 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UpdateController {
 
+
+    private final TranslateClient translateClient;
+    private final RecipeClient recipeClient;
     private final UserService userService;
     private final HandlersMap commandMap;
-    private final RecipeClient recipeClient;
     private BotState botState;
 
     public Answer request(Update update) {
@@ -51,7 +54,8 @@ public class UpdateController {
 
     private void setMealByName(ClassifiedUpdate update) {
         String name = update.getUpdate().getMessage().getText();
-        List<Meal> meal = recipeClient.findByName(name);
+        String translatedName = translateClient.translateWord(name);
+        List<Meal> meal = recipeClient.findByName(translatedName);
 
         update.setTelegramType(TelegramType.Command);
         update.setCommandName("/meal");
@@ -60,7 +64,8 @@ public class UpdateController {
 
     private void setMealByIngredient(ClassifiedUpdate update) {
         String ingredient = update.getUpdate().getMessage().getText();
-        List<Meal> meal = recipeClient.findByMainIngredient(ingredient);
+        String translatedIngredient = translateClient.translateWord(ingredient);
+        List<Meal> meal = recipeClient.findByMainIngredient(translatedIngredient);
 
         update.setTelegramType(TelegramType.Command);
         update.setCommandName("/meal");
@@ -89,4 +94,5 @@ public class UpdateController {
             }
         }
     }
+
 }

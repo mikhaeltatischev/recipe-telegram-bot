@@ -17,6 +17,9 @@ public class RecipeClientImpl implements RecipeClient {
     private static final String NAME_PATH = "/api/json/v1/1/search.php";
     private static final String MAIN_INGREDIENT_PATH = "/api/json/v1/1/filter.php";
     private static final String ID_PATH = "/api/json/v1/1/lookup.php";
+    private static final String NAME_PARAMETER = "s";
+    private static final String INGREDIENT_PARAMETER = "i";
+    private static final String ID_PARAMETER = "i";
 
     private final WebClient webClient;
 
@@ -27,7 +30,7 @@ public class RecipeClientImpl implements RecipeClient {
     public List<Meal> findByName(String name) {
         Mono<Meals> response = webClient.get()
                 .uri((uriBuilder -> uriBuilder.path(NAME_PATH)
-                        .queryParam("s", name).build()))
+                        .queryParam(NAME_PARAMETER, name).build()))
                 .retrieve()
                 .bodyToMono(Meals.class);
 
@@ -37,7 +40,7 @@ public class RecipeClientImpl implements RecipeClient {
     public List<Meal> findByMainIngredient(String ingredient) {
         Mono<Meals> response = webClient.get()
                 .uri((uriBuilder -> uriBuilder.path(MAIN_INGREDIENT_PATH)
-                        .queryParam("i", ingredient).build()))
+                        .queryParam(INGREDIENT_PARAMETER, ingredient).build()))
                 .retrieve()
                 .bodyToMono(Meals.class);
 
@@ -47,7 +50,7 @@ public class RecipeClientImpl implements RecipeClient {
     public List<Meal> findById(String id) {
         Mono<Meals> response = webClient.get()
                 .uri((uriBuilder -> uriBuilder.path(ID_PATH)
-                        .queryParam("i", id).build()))
+                        .queryParam(ID_PARAMETER, id).build()))
                 .retrieve()
                 .bodyToMono(Meals.class);
 

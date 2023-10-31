@@ -1,6 +1,8 @@
 package org.sionnach.bot.builder;
 
 import lombok.SneakyThrows;
+import org.sionnach.bot.client.TranslateClient;
+import org.sionnach.bot.client.impl.TranslateClientImpl;
 import org.sionnach.bot.keyboard.InlineKeyboard;
 import org.sionnach.bot.keyboard.ReplyKeyboardMaker;
 import org.sionnach.bot.model.Answer;
@@ -9,16 +11,15 @@ import org.sionnach.bot.model.ClassifiedUpdate;
 import org.sionnach.bot.model.Meal;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 import java.util.List;
 
 public class SendMessageBuilder {
 
-    private static final String START_MESSAGE = "Привет! \nЭтот бот поможет тебе с поиском рецептов любых блюд\n" +
-            "Ниже ты можешь выбрать способ поиска рецепта";
-    private static final String INGREDIENTS_MESSAGE = "Введите ингредиенты по которым вы хотели бы найти рецепт\n" +
-            "Формат ввода: \"Спаггети, бекон, сыр\"";
+    private static final String START_MESSAGE = """
+            Привет!\s
+            Этот бот поможет тебе с поиском рецептов любых блюд
+            Ниже ты можешь выбрать способ поиска рецепта""";
     private static final String INGREDIENT_MESSAGE = "Введите основной ингредиент блюда";
     private static final String NOT_FOUND_MESSAGE = "Рецепты не найдены. Попробуйте ещё раз";
     private static final String MEALS_MESSAGE = "Подобранные рецепты";
@@ -29,10 +30,12 @@ public class SendMessageBuilder {
     private static final String AREA = "Происхождение - ";
     private static final String CATEGORY = "Категория - ";
 
+    private final TranslateClient client;
     private SendMessage sendMessage;
 
     public SendMessageBuilder() {
         this.sendMessage = new SendMessage();
+        this.client = new TranslateClientImpl();
     }
 
     public SendMessageBuilder chatId(Long chatId) throws Exception {
@@ -125,6 +128,6 @@ public class SendMessageBuilder {
                 .append(VIDEO)
                 .append(meal.getStrYoutube());
 
-        return builder.toString();
+        return client.translate(builder.toString());
     }
 }

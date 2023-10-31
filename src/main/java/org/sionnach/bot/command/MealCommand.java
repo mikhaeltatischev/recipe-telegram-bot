@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import org.sionnach.bot.builder.SendMessageBuilder;
 import org.sionnach.bot.handler.CommandHandler;
 import org.sionnach.bot.model.Answer;
-import org.sionnach.bot.model.BotState;
 import org.sionnach.bot.model.ClassifiedUpdate;
 import org.sionnach.bot.model.User;
 import org.springframework.stereotype.Component;

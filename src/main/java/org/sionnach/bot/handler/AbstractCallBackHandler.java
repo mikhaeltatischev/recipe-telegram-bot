@@ -1,10 +1,10 @@
 package org.sionnach.bot.handler;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.persistence.MappedSuperclass;
 import org.sionnach.bot.callBack.CallBack;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.MappedSuperclass;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

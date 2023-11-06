@@ -1,7 +1,8 @@
 package org.sionnach.bot.handler;
 
-import jakarta.persistence.MappedSuperclass;
 import org.sionnach.bot.model.*;
+
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public interface Handler {

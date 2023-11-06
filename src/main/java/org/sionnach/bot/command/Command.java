@@ -1,9 +1,10 @@
 package org.sionnach.bot.command;
 
-import jakarta.persistence.MappedSuperclass;
 import org.sionnach.bot.model.Answer;
 import org.sionnach.bot.model.ClassifiedUpdate;
 import org.sionnach.bot.model.User;
+
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public interface Command {

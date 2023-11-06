@@ -1,8 +1,6 @@
 package org.sionnach.bot.builder;
 
 import lombok.SneakyThrows;
-import org.sionnach.bot.client.TranslateClient;
-import org.sionnach.bot.client.impl.TranslateClientImpl;
 import org.sionnach.bot.keyboard.InlineKeyboard;
 import org.sionnach.bot.keyboard.ReplyKeyboardMaker;
 import org.sionnach.bot.model.Answer;
@@ -30,12 +28,10 @@ public class SendMessageBuilder {
     private static final String AREA = "Происхождение - ";
     private static final String CATEGORY = "Категория - ";
 
-    private final TranslateClient client;
     private SendMessage sendMessage;
 
     public SendMessageBuilder() {
         this.sendMessage = new SendMessage();
-        this.client = new TranslateClientImpl();
     }
 
     public SendMessageBuilder chatId(Long chatId) throws Exception {
@@ -128,6 +124,6 @@ public class SendMessageBuilder {
                 .append(VIDEO)
                 .append(meal.getStrYoutube());
 
-        return client.translateText(builder.toString());
+        return builder.toString();
     }
 }

@@ -1,6 +1,5 @@
 package org.sionnach.bot.config;
 
-import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import org.sionnach.bot.controller.UpdateController;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +9,8 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {

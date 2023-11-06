@@ -1,9 +1,9 @@
 package org.sionnach.bot.handler;
 
-import jakarta.annotation.PostConstruct;
 import org.sionnach.bot.model.*;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
